@@ -8,6 +8,7 @@ import GamesByGenreId from "../Components/GamesByGenreId";
 function Home() {
     const [allGameList, setAllGameList]=useState();
     const [gameListByGeneres, setGameListByGeneres]=useState([]);
+    const [selectedGenre, setSelectedGenre]=useState('Action');
     useEffect(()=>{
         getAllGamesList();
         getGameListByGenresId(4);
@@ -29,14 +30,17 @@ function Home() {
   return (
     <div className="grid grid-cols-4">
         <div className="px-5 hidden md:block">
-            <GenreList genreId={(genreId)=>getGameListByGenresId(genreId)}/>
+            <GenreList genreId={(genreId)=>getGameListByGenresId(genreId)}
+            selectedGenre={(name)=>setSelectedGenre(name)}
+            />
         </div>
         <div className="col-span-4 md:col-span-3">
             {allGameList?.length>0 && gameListByGeneres.length>0 ?
             <div>
                 <Banner gameBanner={allGameList[0]}/>
                 <TrendingGames gameList={allGameList}/>
-                <GamesByGenreId gameList={gameListByGeneres}/>
+                <GamesByGenreId gameList={gameListByGeneres}
+                selectedGenre= {selectedGenre}/>
             </div>
             :null}
         </div>
